@@ -1,0 +1,485 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Castororo Design System - Stranger Things Inspired Dual-World Theme */
+
+@layer base {
+  :root {
+    /* Light Mode - Normal World */
+    --background: 30 20% 96%;
+    --foreground: 0 0% 8%;
+
+    --card: 30 15% 98%;
+    --card-foreground: 0 0% 8%;
+
+    --popover: 30 15% 98%;
+    --popover-foreground: 0 0% 8%;
+
+    --primary: 0 72% 30%;
+    --primary-foreground: 30 20% 96%;
+
+    --secondary: 30 10% 90%;
+    --secondary-foreground: 0 0% 15%;
+
+    --muted: 30 10% 88%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 0 85% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 15% 85%;
+    --input: 30 15% 85%;
+    --ring: 0 72% 30%;
+
+    --radius: 0.5rem;
+
+    /* Castororo Custom Tokens - Light */
+    --glow: 0 100% 50%;
+    --portal: 280 60% 50%;
+    --portal-glow: 280 80% 60%;
+    --neon-red: 0 100% 50%;
+    --fog: 30 10% 70%;
+    --crack: 0 80% 40%;
+
+    /* CRT & Grain */
+    --grain-opacity: 0.03;
+    --crt-opacity: 0.02;
+
+    /* Sidebar */
+    --sidebar-background: 30 15% 95%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 0 72% 30%;
+    --sidebar-primary-foreground: 30 20% 96%;
+    --sidebar-accent: 30 10% 88%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 30 15% 85%;
+    --sidebar-ring: 0 72% 30%;
+  }
+
+  .dark {
+    /* Dark Mode - Upside Down */
+    --background: 0 15% 4%;
+    --foreground: 0 5% 90%;
+
+    --card: 0 20% 6%;
+    --card-foreground: 0 5% 90%;
+
+    --popover: 0 20% 6%;
+    --popover-foreground: 0 5% 90%;
+
+    --primary: 0 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 30% 12%;
+    --secondary-foreground: 0 5% 85%;
+
+    --muted: 0 25% 10%;
+    --muted-foreground: 0 10% 55%;
+
+    --accent: 0 100% 55%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 100% 40%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 30% 15%;
+    --input: 0 30% 15%;
+    --ring: 0 100% 50%;
+
+    /* Castororo Custom Tokens - Dark (Upside Down) */
+    --glow: 0 100% 50%;
+    --portal: 0 80% 40%;
+    --portal-glow: 0 100% 55%;
+    --neon-red: 0 100% 50%;
+    --fog: 0 20% 20%;
+    --crack: 0 100% 45%;
+
+    /* CRT & Grain - More intense in Upside Down */
+    --grain-opacity: 0.06;
+    --crt-opacity: 0.04;
+
+    /* Sidebar */
+    --sidebar-background: 0 20% 5%;
+    --sidebar-foreground: 0 5% 90%;
+    --sidebar-primary: 0 100% 50%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 30% 12%;
+    --sidebar-accent-foreground: 0 5% 85%;
+    --sidebar-border: 0 30% 15%;
+    --sidebar-ring: 0 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Cinzel', serif;
+  }
+}
+
+@layer utilities {
+
+  /* Glitch Effect */
+  .glitch {
+    position: relative;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glitch::before {
+    animation: glitch-1 0.3s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    color: hsl(var(--accent));
+  }
+
+  .glitch::after {
+    animation: glitch-2 0.3s infinite linear alternate-reverse;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    color: hsl(var(--portal));
+  }
+
+  @keyframes glitch-1 {
+    0% {
+      transform: translateX(0);
+    }
+
+    20% {
+      transform: translateX(-2px);
+    }
+
+    40% {
+      transform: translateX(2px);
+    }
+
+    60% {
+      transform: translateX(-1px);
+    }
+
+    80% {
+      transform: translateX(1px);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes glitch-2 {
+    0% {
+      transform: translateX(0);
+    }
+
+    20% {
+      transform: translateX(2px);
+    }
+
+    40% {
+      transform: translateX(-2px);
+    }
+
+    60% {
+      transform: translateX(1px);
+    }
+
+    80% {
+      transform: translateX(-1px);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* Neon Glow */
+  .neon-glow {
+    text-shadow:
+      0 0 5px hsl(var(--glow)),
+      0 0 10px hsl(var(--glow)),
+      0 0 20px hsl(var(--glow)),
+      0 0 40px hsl(var(--glow) / 0.5);
+  }
+
+  .neon-glow-subtle {
+    text-shadow:
+      0 0 5px hsl(var(--glow) / 0.5),
+      0 0 10px hsl(var(--glow) / 0.3);
+  }
+
+  /* Box Glow */
+  .box-glow {
+    box-shadow:
+      0 0 10px hsl(var(--glow) / 0.3),
+      0 0 20px hsl(var(--glow) / 0.2),
+      0 0 40px hsl(var(--glow) / 0.1);
+  }
+
+  /* CRT Scanlines */
+  .crt-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg,
+        transparent,
+        transparent 2px,
+        hsl(0 0% 0% / var(--crt-opacity)) 2px,
+        hsl(0 0% 0% / var(--crt-opacity)) 4px);
+    z-index: 9999;
+  }
+
+  /* Film Grain */
+  .grain-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    opacity: var(--grain-opacity);
+    z-index: 9998;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* World Flip Animation */
+  .world-flip {
+    animation: worldFlip 0.6s ease-in-out;
+  }
+
+  @keyframes worldFlip {
+    0% {
+      transform: perspective(1000px) rotateY(0deg) scale(1);
+      filter: brightness(1);
+    }
+
+    50% {
+      transform: perspective(1000px) rotateY(90deg) scale(0.95);
+      filter: brightness(0.3);
+    }
+
+    100% {
+      transform: perspective(1000px) rotateY(0deg) scale(1);
+      filter: brightness(1);
+    }
+  }
+
+  /* Portal Pulse */
+  .portal-pulse {
+    animation: portalPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes portalPulse {
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px hsl(var(--portal-glow) / 0.5);
+    }
+
+    50% {
+      box-shadow: 0 0 40px hsl(var(--portal-glow) / 0.8), 0 0 60px hsl(var(--portal-glow) / 0.4);
+    }
+  }
+
+  /* Float Animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  /* Fade In Up */
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Upside Down Reveal */
+  .upside-down-reveal {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upside-down-reveal::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+        hsl(var(--glow) / 0.2) 0%,
+        transparent 50%,
+        hsl(var(--portal-glow) / 0.2) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .upside-down-reveal:hover::after {
+    opacity: 1;
+  }
+
+  /* Crack Effect on Hover */
+  .crack-reveal {
+    position: relative;
+  }
+
+  .crack-reveal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0 L48 20 L52 25 L47 45 L55 50 L45 55 L53 75 L48 80 L50 100' stroke='%23ff0000' stroke-width='1' fill='none' opacity='0.6'/%3E%3C/svg%3E");
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 10;
+  }
+
+  .crack-reveal:hover::before {
+    opacity: 1;
+    animation: crackGlow 1s ease-in-out infinite;
+  }
+
+  @keyframes crackGlow {
+
+    0%,
+    100% {
+      filter: drop-shadow(0 0 5px hsl(var(--crack)));
+    }
+
+    50% {
+      filter: drop-shadow(0 0 15px hsl(var(--crack)));
+    }
+  }
+
+  /* Typing cursor */
+  .typing-cursor::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.5);
+}
+
+/* Selection color */
+::selection {
+  background: hsl(var(--primary) / 0.3);
+  color: hsl(var(--foreground));
+}
+
+/* Ambient Event Styles */
+@keyframes subtleShake {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(1px, -1px);
+  }
+
+  50% {
+    transform: translate(-1px, 1px);
+  }
+
+  75% {
+    transform: translate(1px, 1px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+body.clock-shake {
+  animation: subtleShake 0.4s ease;
+}
+
+.ambient-tear {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 9999;
+  background: url('/images/tear-crack.png') center/contain no-repeat;
+  filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.6));
+  mix-blend-mode: hard-light;
+}
+
+.ambient-tear.active {
+  opacity: 1;
+}
