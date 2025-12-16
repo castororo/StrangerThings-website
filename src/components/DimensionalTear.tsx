@@ -9,9 +9,12 @@ interface DimensionalTearProps {
     className?: string;
 }
 
+import { useIsMobile } from '@/hooks/use-mobile';
+
 export default function DimensionalTear({ children, className = '' }: DimensionalTearProps) {
     const { theme } = useTheme();
     const maskId = useId();
+    const isMobile = useIsMobile();
     const {
         containerRef,
         isDragging,
@@ -28,6 +31,7 @@ export default function DimensionalTear({ children, className = '' }: Dimensiona
     const handlers = {
         ...originalHandlers,
         onPointerDown: (e: any) => {
+            if (isMobile) return;
             originalHandlers.onPointerDown(e);
             playSound('gate-open');
             playSound('crackle');
@@ -45,7 +49,7 @@ export default function DimensionalTear({ children, className = '' }: Dimensiona
     return (
         <div
             ref={containerRef}
-            className={`relative group touch-none select-none ${className} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+            className={`relative groupSelect-none ${className} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} ${isMobile ? 'touch-auto' : 'touch-none'}`}
             {...handlers}
         >
             {/* 

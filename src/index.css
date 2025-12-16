@@ -119,6 +119,28 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+
+    /* Hide default cursor on desktop to accommodate custom cursor */
+    @media (min-width: 768px) {
+      cursor: none;
+    }
+  }
+
+  /* Ensure links/buttons also don't show the hand cursor */
+  @media (min-width: 768px) {
+
+    a,
+    button,
+    [role="button"],
+    input,
+    textarea,
+    select {
+      cursor: none;
+    }
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;
@@ -482,4 +504,170 @@ body.clock-shake {
 
 .ambient-tear.active {
   opacity: 1;
+}
+
+/* Flashlight / Discover Mode Styles */
+.discover-mode {
+  position: relative;
+  /* Prevent flipped content from overflowing */
+  --flashlight-x: 50%;
+  --flashlight-y: 50%;
+  --flashlight-radius: 100px;
+}
+
+.upside-down-world {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  /* Visual Style of Upside Down */
+  filter: hue-rotate(330deg) brightness(0.6) contrast(1.2) sepia(0.4);
+  /* The Reveal Mechanism */
+  clip-path: circle(var(--flashlight-radius) at var(--flashlight-x) var(--flashlight-y));
+  transition: clip-path 0.05s linear;
+  will-change: clip-path;
+}
+
+/* Optional: Flipped geometry if requested, but user said "vertically flipped" */
+/* If we flip the container, content might align weirdly if not symmetric. 
+   Let's flip the content logic or apply a transform. */
+.upside-down-world>* {
+  /* transform: scaleY(-1); */
+  /* Note: Flipping entire text makes it unreadable. 
+     Maybe user wants the "Upside Down" aesthetic (dark/red) rather than literal geometric flip?
+     User request: "Be vertically flipped (scaleY(-1))"
+     Okay, I will apply it, but it might look disorienting. */
+  transform: scaleY(-1);
+  transform-origin: center;
+}
+
+/* Fog & Grain Overlay for Flashlight Layer */
+.upside-down-world::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('/images/red_fog_overlay.png');
+  background-size: cover;
+  mix-blend-mode: screen;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* border: 1px dashed rgba(255, 0, 0, 0.3); */
+
+
+
+/* -------------------------------------------------------------------------- */
+/*                        CINEMATIC LOADING SCREEN                            */
+/* -------------------------------------------------------------------------- */
+
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.8s ease;
+}
+
+#loading-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-fog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  /* Wider to scroll */
+  height: 100%;
+  background: url('/assets/loading/red-fog.png') repeat-x center;
+  background-size: cover;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  animation: fogMove 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fogMove {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.loading-static {
+  position: absolute;
+  inset: 0;
+  background: url('/assets/loading/vhs-noise.png');
+  /* Using png, animating via CSS */
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: staticNoise 0.5s steps(5) infinite;
+}
+
+/* Simulate VHS noise movement with background shift */
+@keyframes staticNoise {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 100px 100px;
+  }
+}
+
+.loading-content {
+  position: relative;
+  z-index: 10;
+}
+
+.loading-title {
+  font-family: 'Cinzel', serif;
+  font-size: 4rem;
+  /* Responsive sizing below */
+  font-weight: 800;
+  letter-spacing: 0.5rem;
+  color: #cf1818;
+  /* Iconic Red */
+  text-shadow: 0 0 10px rgba(207, 24, 24, 0.5), 0 0 30px rgba(207, 24, 24, 0.3);
+  opacity: 0;
+  transform: scale(1.1);
+  animation: titleReveal 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards 0.5s;
+}
+
+/* "Stranger Things" style text zoom-in faint glow */
+@keyframes titleReveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.15);
+    filter: blur(4px);
+  }
+
+  20% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    letter-spacing: 0.25rem;
+    /* Slight compression effect */
+  }
+}
+
+@media (max-width: 768px) {
+  .loading-title {
+    font-size: 2.5rem;
+    letter-spacing: 0.2rem;
+  }
 }

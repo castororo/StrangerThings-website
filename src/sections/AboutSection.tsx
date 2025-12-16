@@ -62,17 +62,19 @@ function ProfileCard({ name, role, index }: ProfileCardProps) {
             <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-glow/20 to-transparent" />
           </motion.div>
 
-          {/* Crack Effect */}
           <motion.svg
             className="absolute inset-0 w-full h-full pointer-events-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 0.6 : 0 }}
             transition={{ duration: 0.5 }}
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
           >
             <path
-              d="M 50% 0 L 48% 20% L 52% 25% L 47% 45% L 55% 50% L 45% 55% L 53% 75% L 48% 80% L 50% 100%"
+              d="M 50 0 L 48 20 L 52 25 L 47 45 L 55 50 L 45 55 L 53 75 L 48 80 L 50 100"
               stroke="hsl(var(--glow))"
               strokeWidth="2"
+              vectorEffect="non-scaling-stroke"
               fill="none"
               className="animate-flicker"
               style={{ filter: 'drop-shadow(0 0 10px hsl(var(--glow)))' }}

@@ -40,7 +40,10 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
         'radar-blip': { loop: false, volume: 0.5 },
         'radar-click': { loop: false, volume: 0.5 },
         'static-burst': { loop: false, volume: 0.6 },
+
         'clock-chime-ambient': { loop: false, volume: 0.4 },
+        'flashlight-rumble': { loop: true, volume: 0.3 },
+        'anomaly-detect': { loop: false, volume: 0.6 },
     });
 
     useEffect(() => {
@@ -111,6 +114,9 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
             // "Prevent overlapping audio instances" logic
             if (sound.loop() && sound.playing()) return;
             sound.play();
+            console.log(`[Sound] Playing: ${name}`);
+        } else {
+            console.warn(`[Sound] Sound not found or not loaded: ${name}`);
         }
     };
 

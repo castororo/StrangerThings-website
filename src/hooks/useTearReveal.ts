@@ -9,9 +9,12 @@ interface TearState {
     currentY: number;
 }
 
+import { useIsMobile } from './use-mobile';
+
 export function useTearReveal() {
     const [isDragging, setIsDragging] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
+    const isMobile = useIsMobile();
 
     // Motion values for high-performance updates
     const tearWidth = useSpring(0, { damping: 15, stiffness: 200, mass: 0.5 });
@@ -23,7 +26,7 @@ export function useTearReveal() {
     const dragStart = useRef({ x: 0, y: 0 });
 
     const handlePointerDown = useCallback((e: React.PointerEvent) => {
-        if (!containerRef.current) return;
+        if (!containerRef.current || isMobile) return;
         setIsDragging(true);
         const rect = containerRef.current.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -33,9 +36,9 @@ export function useTearReveal() {
         tearCenterX.set(x);
         tearCenterY.set(y);
 
-        // Lock body scroll on mobile
+        // Lock body scroll
         document.body.style.overflow = 'hidden';
-    }, [tearCenterX, tearCenterY]);
+    }, [tearCenterX, tearCenterY, isMobile]);
 
     const handlePointerMove = useCallback((e: React.PointerEvent) => {
         if (!isDragging || !containerRef.current) return;
